@@ -1,0 +1,109 @@
+---
+title: "Check-in 2"
+author: "Jonathan Manzano"
+date: 02/14/2024
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    code-summary: "Code"
+  pdf: default
+---
+
+## A. Flights Data
+
+**1.**  For this lab, we'll be using the `flights` data. You can load this data using the following code:
+
+```{r}
+#| output: false
+library(tidyverse)
+library(nycflights13)
+data(flights)
+```
+
+**2.** Use the `mutate()` function to turn `origin` into a factor.
+
+```{r}
+flights <- flights |>
+  mutate(origin = factor(origin))
+
+str(flights$origin)
+```
+
+{{< pagebreak >}}
+
+**3.** Compute the mean `arr_delay` for each origin airport. Which airport has the longest delays on average? You can drop missing rows.
+
+```{r}
+origin_arr_delay_means <- flights |>
+  filter(!is.na(arr_delay)) |>
+  group_by(origin) |>
+  summarize(mean_arr_delay = mean(arr_delay, na.rm = TRUE))
+
+print(origin_arr_delay_means)
+```
+
+```{r}
+longest_avg_delay <- origin_arr_delay_means |>
+  arrange(desc(mean_arr_delay)) |>
+  top_n(1, mean_arr_delay)
+
+print(longest_avg_delay)
+```
+
+The airport that has the longest delays on average is EWR.
+
+**4.** Use the `mutate()` function to turn `month` into a factor.
+
+```{r}
+flights <- flights |>
+  mutate(month = factor(month))
+
+str(flights$month)
+```
+
+{{< pagebreak >}}
+
+**5.** Compute the mean `arr_delay` by month. What do you notice?
+
+```{r}
+month_arr_delay_means <- flights |>
+  filter(!is.na(arr_delay)) |>
+  group_by(month) |>
+  summarize(mean_arr_delay_month = mean(arr_delay, na.rm = TRUE))
+
+print(month_arr_delay_means)
+```
+
+```{r}
+longest_avg_delay_month <- month_arr_delay_means |>
+  arrange(desc(mean_arr_delay_month)) |>
+  top_n(1, mean_arr_delay_month)
+
+print(longest_avg_delay_month)
+```
+
+The longest `arr_delay` is July. The difference is that since we are computing the mean based on different groupings, the means will differ. In Q4 it was based on the location of distinct airports origin regardless of the month. For this question its is based specific months but from all airport origins.
+
+{{< pagebreak >}}
+
+**6.** Compute the mean `arr_delay` by month AND `origin`. What do you notice?
+
+```{r}
+month_origin_means <- flights |>
+  filter(!is.na(arr_delay)) |>
+  group_by(month, origin) |>
+  summarize(mean_arr_delay_month_origin = mean(arr_delay, na.rm = TRUE), .groups = 'drop')
+
+print(month_origin_means)
+```
+
+```{r}
+highest_avg_temp_location <- month_origin_means |>
+  arrange(desc(mean_arr_delay_month_origin)) |>
+  slice(1)
+
+print(highest_avg_temp_location)
+```
+
+The JFK airport in the month of July has the longest `arr_delay`. I notice not that that are it has outputted a table with each month and for each origin, it has computed for that month and origin's mean `arr_delay`.

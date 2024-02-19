@@ -1,0 +1,147 @@
+---
+title: "Lab 1: R and RStudio"
+author: "Jonathan Manzano"
+date: 2024-1-31
+date-format: "[Due] MMMM DD, YYYY"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    code-summary: "Code"
+---
+  
+## Part A. Introduction to R
+  
+Open R (not RStudio). You should see a window that looks something like this (your version number may differ slightly):  
+  
+![](https://i.imgur.com/IpHiImQ.png)
+  
+At the bottom of this window, you should see a `>` symbol. This is called a prompt and indicates that R is waiting for instructions (in the form of code). Type `100 + 100` and then press return or enter. R should produce the following output: `[1] 200`. For now, ignore the `[1]`. This is R's way of letting us know that the answer is a **single** value: 200.  
+  
+<div style="page-break-after: always;"></div>
+  
+### 1. Compute $2^{1023}$ by typing the line: `2 ^ 1023`. What is the resulting value? Do you trust R's answer?
+  
+```{r, eval = T}
+2 ^ 1023
+```
+  
+> **I trust R’s answer because I double checked it with a physical calculator, and it calculated the same answer.**  
+  
+<br/>
+  
+### 2. Compute $2^{1024}$ by typing the line: `2 ^ 1024`. What is the resulting value? Do you trust R's answer?
+  
+```{r, eval = T}
+2 ^ 1024
+```
+  
+> **I do not trust R’s answer for question two. It states that $2^{1024}$ it is `Inf`. According to WolframAlpha:**  
+  
+![](https://i.imgur.com/yxgwBdP.png)
+  
+<div style="page-break-after: always;"></div>
+  
+<br/>
+  
+We can save values as objects by giving them names. Try this out by typing `x <- 10` and then pressing return/enter.  
+  
+```{r, eval = T}
+x <- 10
+```
+  
+### 3. What does the command `print(x)` produce? Try to predict what the answer will be before you run the code.
+  
+> **I predict that it will print the integer value $10$.**  
+  
+```{r, eval = T}
+print(x)
+```
+  
+<br/>
+  
+### 4. What does the command `x + 10` produce? Try to predict what the answer will be before you run the code.
+  
+> **I predict that it will print the value $20$. Since we implicitly assigned the variable $x$ with the integer $10$, prompting the instruction `x + 10` will result in the console printing the integer $20$.**  
+  
+```{r, eval = T}
+x + 10
+```
+  
+<br/>
+  
+### 5. Run the following two lines of code, one after the other. What is the result? Try to predict what the answer will be before you run the code.
+  
+> **I predict that the console will print the integer value $121$. The first line updates the existing variable $x$ by assigning it the value of its current value, $10$, plus the integer $1$ to the integer $11$ The second line is another way to write $x^{2}$. After the second line executes, $11 \times 11$, the console should print the integer value $121$.**  
+  
+```{r, eval = T}
+x <- x + 1
+x * x
+```
+  
+<div style="page-break-after: always;"></div>
+  
+### 6. Run the following lines of code, one after the other. What is the result? In your own words, explain what this code is doing.
+  
+```{r, eval = T}
+sides <- c("H", "T")
+flip1 <- sample(sides, 1, replace = T)
+print(flip1)
+```
+  
+> **This simulates a coin tossing experiment with replacement. The coin is flipped once and the side facing up is printed on the console.**  
+  
+<br/>
+  
+### 7. Run the following lines of code, one after the other. What is the result? In your own words, explain what this code is doing.
+  
+```{r, eval = T}
+sides <- c("H", "T")
+flip10 <- sample(sides, 10, replace = T)
+print(flip10)
+```
+  
+> **This simulates a coin tossing experiment with replacement. The coin is flipped $10$ times and, on each flip, the side facing up is printed on the console.**  
+  
+<div style="page-break-after: always;"></div>
+  
+## Part B. Introduction to RStudio
+  
+Now, open RStudio. It should look some thing like this image, from the official [RStudio Guide](https://docs.posit.co/ide/user/ide/get-started/):  
+  
+![](https://docs.posit.co/ide/user/ide/get-started/images/rstudio-panes-labeled.jpeg)
+  
+RStudio is like Microsoft Word/Google Docs for writing R code--it has useful tools (analogous to spell check) for programmers. In the lower left corner is your Console. This should look like the R window you were working in for Part A. The Console is meant for brief **interactive** R commands. The top right corner should be your **Environment** pane, which displays R objects that you have created. Right now your environment should be empty.  
+  
+<div style="page-break-after: always;"></div>
+  
+### 8. In the **Console**, type the command `x <- 10`. What do you see in your environment pane?
+  
+```{r, eval = T}
+x <- 10
+```
+  
+![](C:/Users/Jonathan/Documents/ShareX/Screenshots/2024-01/rstudio_SPjw7AtOCz.png)
+  
+> **In the environment pane, a table is generated with the variable created in the console.**  
+  
+<br/>
+  
+### 9. The bottom right pane is the **Output** pane, which will often be used to display results/visualizations of your R code. There are many tabs here, but click on the **Files** tab. What do you see? In your own words, explain what you think the **Files** tab shows.
+  
+![](C:/Users/Jonathan/Documents/ShareX/Screenshots/2024-01/rstudio_R5S8i9cvMG.png)
+  
+> **The files tab shows all the files and directories in the current working directory.**  
+  
+<div style="page-break-after: always;"></div>
+  
+### 10. The top left pane is the **Source** pane. When you want to write more than one line of code at a time, it's a good idea to organize your code in a single file. At the top of the RStudio window, click `File -> New File -> R Script` to open an untitled `.R` file. Copy and paste the following code into your R file. Then highlight the code and click `Run` (which will be in the top left corner of the Source pane). What do you see?
+  
+```{r, eval = T}
+library(ggplot2)
+mpg_plot <- ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_point(aes(color = class))
+mpg_plot
+```
+  
+> **The scattering of data and government-sourced auto data show that displacement and highway mileage have a significant inverse relationship.**  

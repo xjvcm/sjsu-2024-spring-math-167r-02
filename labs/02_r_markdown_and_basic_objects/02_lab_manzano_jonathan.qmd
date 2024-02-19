@@ -1,0 +1,121 @@
+---
+title: "Lab 2 - R Markdown and Basic Objects"
+author: "Jonathan Manzano"
+date: 02/07/2024
+date-format: "MMMM DD, YYYY"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    code-summary: "Code"
+  pdf: default
+---
+
+In this lab, you will familiarize yourself with R Markdown, file management, and basic objects and functions. **Follow the instructions below and use R Markdown to create a pdf document with your code and answers to the following questions on Gradescope.** You may find a template file by clicking "Code" in the top right corner of this page.
+
+Your final submission should clearly include all code needed to generate your answers and should be formatted according to the guidelines outlined in class. In particular, make sure:
+
+1. Code and output are clearly organized by question.
+2. Unnecessary messages, warning, and output are removed.
+
+You may collaborate with your classmates and consult external resources, but you should write and submit your own answer. **Any classmates with whom you collaborate should be credited at the top of your submission. Similarly, if you consult any external references, you should cite them clearly and explicitly.**
+
+## A. File paths and Introduction to R Markdown
+
+1. Create a `MATH167R` directory somewhere on your computer that will contain all your work for this class. Within the `MATH167R` folder, create subdirectories for `labs`, `checkins`, and `data`. Save this .Rmd document in your `data` folder and then Render/Knit your Rmd document. The following code chunk should print the location of your Rmd. document:
+
+```{r, eval = T}
+getwd()
+```
+
+{{< pagebreak >}}
+
+2. In the console, run the command `getwd()`. What is the output? If it is different from your answer to Question 1, why? Explain, in your own words, what the working directory is.
+
+The output is `[1] "D:/MATH167R/data"`. It is different from my answer to Question 1 because the working directory where `getwd()` is executed from is different from each question. In Question 1, `getwd()` was executed from the path: `D:/MATH167R/data/02_lab.qmd` where `02_lab.qmd` is located in `D:/MATH167R/data/02_lab.qmd`. In Question 2, the working directory for the console is `D:/MATH167R` and executing `getwd()` will print the same working directory path of the console.  
+
+3. Every time you Render/Knit your Rmd document, **all** of the code is run in a **new** R session. Any code run in the interactive session **does not affect** your rendered html file. Create a code chunk below that sets the value of `x` to be your favorite number and then uses `print(x)` to print it out.
+  
+```{r}
+x <- 3
+print(x)
+```
+  
+4. Download [this dataset](https://www.openintro.org/data/csv/cars.csv) to your `data` folder, then use a code chunk with the code `cars <- read.csv("YOUR PATH HERE")` to open the file. You will need to replace the text `YOUR PATH HERE` with the correct location of the dataset to open this successfully.  
+  
+```{r}
+cars_csv_location <- paste("D:/RStudio/sjsu/2024/spring/math167r_02/labs/02_r_",
+                           "markdown_and_basic_objects/cars.csv", sep = "")
+
+cars <- read.csv(cars_csv_location)
+```
+
+
+5. Run the code `head(cars)` in a code chunk to display the first few rows of this dataset.
+
+```{r}
+head(cars)
+```
+
+
+## B. Vectors and Matrices
+
+6. Write a line of code to generate a vector of length 100 whose entries are 1, 2, ..., 100.
+
+```{r, eval = T}
+lab03_q06_matrix <- c(1:100)
+```
+
+7. Write a line of code to generate the following matrix:
+
+`1 2 3`
+
+`4 5 6`
+
+`7 8 9`
+
+```{r, eval = T}
+lab03_q07_matrix <- matrix(c(1, 4, 7, 2, 5, 8, 3, 6, 9), nrow = 3, ncol = 3)
+lab03_q07_matrix
+```
+
+## C. Working with Data Frames
+
+Use the following code to load the `penguins` data.
+
+```{r}
+# load palmer penguins package
+library(palmerpenguins)
+
+# open penguins data as a data frame
+data(penguins)
+penguins <- as.data.frame(penguins)
+```
+
+8. Using the `mean()` function, compute the mean body mass of penguins in the dataset, dropping any missing values.
+
+```{r}
+penguins_body_mass_g_clean <- na.omit(penguins$body_mass_g)
+mean(penguins_body_mass_g_clean)
+```
+  
+9. Using the `max` function, compute the maximum flipper length of penguins in the dataset, dropping any missing values.
+
+```{r}
+penguins_fipper_length_mm_clean <- na.omit(penguins$flipper_length_mm)
+max(penguins_fipper_length_mm_clean)
+```
+
+10. Using the `hist` function, create a histogram of the ratio of the penguins' bill length to bill depth, dropping any missing values. What is the shape of the resulting distribution?
+
+```{r}
+# Obtain the proportion between bill length and bill depth.
+penguins$ratio <- penguins$bill_length_mm / penguins$bill_depth_mm
+
+# Remove missing values
+penguins_clean <- na.omit(penguins$ratio)
+
+# Plot the histogram of the ratio
+hist(penguins_clean, main="Histogram for Penguins' Bill Length to Bill
+     Depth Ratio", xlab="Bill Length to Bill Depth Ratio", col="green")
+```

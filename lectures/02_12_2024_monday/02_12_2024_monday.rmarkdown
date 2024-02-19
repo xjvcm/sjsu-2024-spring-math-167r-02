@@ -1,0 +1,50 @@
+---
+title: Lecture
+date: 02/12/2024
+---
+
+
+## Warm-up
+
+
+```{r}
+"hello" |> print()
+1:6 |> sample(1)
+```
+
+
+This is what is happening in the above code:
+
+
+```{r}
+print("hello")
+sample(1:6, 1)
+```
+
+
+## Objects Revisited
+
+
+```{r}
+diamonds <- ggplot2::diamonds
+summary(diamonds$carat)
+```
+
+```{r}
+summary(diamonds$cut)
+```
+
+
+## Classes
+
+
+```{r}
+weather_csv <- paste("https://raw.githubusercontent.com/rfordatascience/",
+                     "tidytuesday/master/data/2022/2022-12-20/weather_",
+                     "forecasts.csv", sep="")
+
+weather_forecasts <- readr::read_csv(weather_csv)
+
+class(weather_forecasts$date)
+```
+

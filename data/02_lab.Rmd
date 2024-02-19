@@ -1,0 +1,110 @@
+---
+title: "Lab 2: R Markdown and Basic Objects"
+author: "YOUR NAME HERE"
+date: 2024-02-07
+date-format: "[Due] MMMM DD, YYYY"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    code-summary: "Code"
+
+---
+
+In this lab, you will familiarize yourself with R Markdown, file management, and basic objects and functions. **Follow the instructions below and submit both an Rmd and a pdf document with your code and answers to the following questions on Gradescope.** You may find a template file by clicking "Code" in the top right corner of this page.
+
+Your final submission should clearly include all code needed to generate your answers and should be formatted according to the guidelines outlined in class. In particular, make sure:
+
+1. Code and output are clearly organized by question.
+2. Unnecessary messages, warning, and output are removed.
+
+You may collaborate with your classmates and consult external resources, but you should write and submit your own answer. **Any classmates with whom you collaborate should be credited at the top of your submission. Similarly, if you consult any external references, you should cite them clearly and explicitly.**
+
+## A. File paths and Introduction to R Markdown
+
+1. Create a `MATH167R` directory somewhere on your computer that will contain all your work for this class. Within the `MATH167R` folder, create subdirectories for `labs`, `checkins`, and `data`. Save this .Rmd document in your `data` folder and then Render/Knit your Rmd document. The following code chunk should print the location of your Rmd. document:
+
+```{r, eval = T}
+getwd()
+```
+
+2. In the console, run the command `getwd()`. What is the output? If it is different from your answer to Question 1, why? Explain, in your own words, what the working directory is.
+
+The output from the console is `[1] "D:/RStudio/SJSU/2024/Spring/MATH167R"`. The output from Question 1 is `[1] "D:/RStudio/SJSU/2024/Spring/MATH167R/data"`. The output from the console is different from Question 1. In Question 1, the R Markdown file location is `D:/RStudio/SJSU/2024/Spring/MATH167R/data`. The console working directory by default is in the package's root directory. This explains why the directory paths differ.  
+ 
+3. Every time you Render/Knit your Rmd document, **all** of the code is run in a **new** R session. Any code run in the interactive session **does not affect** your rendered html file. Create a code chunk below that sets the value of `x` to be your favorite number and then uses `print(x)` to print it out.
+
+```{r, eval = T}
+x <- 13
+print()
+```
+
+4. Download [this dataset](https://www.openintro.org/data/csv/cars.csv) to your `data` folder, then use a code chunk with the code `cars <- read.csv("YOUR PATH HERE")` to open the file. You will need to replace the text `YOUR PATH HERE` with the correct location of the dataset to open this successfully.
+
+```{r, eval = T}
+cars <- read.csv("D://RStudio//SJSU//2024//Spring//MATH167R//data//cars.csv")
+```
+
+5. Run the code `head(cars)` in a code chunk to display the first few rows of this dataset.
+
+
+```{r, eval = T}
+head(cars)
+```
+
+## B. Vectors and Matrices
+
+6. Write a line of code to generate a vector of length 100 whose entries are 1, 2, ..., 100.
+
+```{r, eval = T}
+vector <- 1:100
+```
+
+7. Write a line of code to generate the following matrix:
+
+`1 2 3`
+
+`4 5 6`
+
+`7 8 9`
+
+```{r, eval = T}
+# REPLACE WITH YOUR CODE
+```
+
+## C. Working with Data Frames
+
+Use the following code to load the `penguins` data.
+
+```{r, eval = T}
+# load palmer penguins package
+library(palmerpenguins)
+
+# open penguins data as a data frame
+data(penguins)
+penguins <- as.data.frame(penguins)
+```
+
+8. Using the `mean()` function, compute the mean body mass of penguins in the dataset, dropping any missing values.
+
+```{r, eval = T}
+# YOUR CODE HERE
+```
+
+<!-- REPLACE THIS LINE WITH YOUR ANSWER -->
+
+9. Using the `max` function, compute the maximum flipper length of penguins in the dataset, dropping any missing values.
+
+```{r, eval = T}
+# YOUR CODE HERE
+```
+
+<!-- REPLACE THIS LINE WITH YOUR ANSWER -->
+
+10. Using the `hist` function, create a histogram of the ratio of the penguins' bill length to bill depth, dropping any missing values. What is the shape of the reuslting distribution?
+
+```{r, eval = T}
+# YOUR CODE HERE
+```
+
+<!-- REPLACE THIS LINE WITH YOUR ANSWER -->
